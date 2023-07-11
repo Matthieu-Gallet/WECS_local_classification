@@ -1,0 +1,16 @@
+# gdal
+numba
+# numpy
+scikit-learn
+matplotlib
+scipy
+joblib
+tqdm
+pywavelets
+ipython
+pandas
+pyaml
+# click
+# pydoe
+# scikit-image
+# h5py
