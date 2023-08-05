@@ -12,6 +12,7 @@ from sklearn.metrics import (
 )
 from collections import Counter
 from sklearn.utils import shuffle
+import os
 
 
 def scm(X):
@@ -145,7 +146,7 @@ def KLCG(cov_est1, cov_est2, mean_est1, mean_est2, tau1, tau2):
 
 
 if __name__ == "__main__":
-    from class_stats_SAR import Hist_SAR
+    # from class_stats_SAR import Hist_SAR
 
     # inputh_data = "../dataset_E3/patchs_size_5/WECS_R0.875_11_4C__w5_s0"
     # inputh_data = "../dataset_E3/patchs_size_5/WECS_R0.5_11_4C__w5_s0"
@@ -153,8 +154,8 @@ if __name__ == "__main__":
     # inputh_data = "../dataset_E3/patchs_size_5/WECS_R0.5_5_4C__w5_s0"
     # inputh_data = "../dataset_E3/patchs_size_5_GLOBAL/WECS_R_G_4C__w5_s0"
     output_dir = f"../results/{str(time.time())}/"
-    bands = [0, 1]  # , 2, 3]
-    exist_create_folder(output_dir)
+    bands = [0, 1, 2]  # , 2, 3]
+    os.makedirs(output_dir, exist_ok=True)
     np.random.seed(42)
 
     log = init_logger(output_dir)
@@ -178,8 +179,8 @@ if __name__ == "__main__":
 
     skf = StratifiedKFold(n_splits=4, shuffle=True, random_state=42)
     knn_cv = KNeighborsClassifier(
-        n_neighbors=10, n_jobs=-1, weights="distance", metric=KL_compound_gaussian
-    )
+        n_neighbors=10, n_jobs=-1
+    )  # , weights="distance", metric=KL_compound_gaussian)
     f1, auc, kappa = [], [], []
     cm = []
 

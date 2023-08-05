@@ -149,8 +149,8 @@ def hist_labels(x_clean, y_clean, output_path, bins=20):
     None
     """
     f, ax = plt.subplots(2, 2, figsize=(15, 15))
-    band = ["VV", "VH", "VV/VH", "L2(VV,VH)"]
-    for j in range(4):
+    band = ["VV", "VH", "VV/VH"]
+    for j in range(len(band)):
         for i in np.unique(y_clean):
             g = x_clean[y_clean == i][:, :, :, j].flatten()
             ax[j // 2, j % 2].hist(g, bins=bins, alpha=0.5, label=i, density=True)
@@ -283,8 +283,8 @@ def create_dataset(
     x_clean, y_clean = clean_dataset(fenetres, y)
     y_clean = group_labels(y_clean)
     x_clean, y_clean = remove_classes(x_clean, y_clean, remove_c)
-    x_balanced, y_balanced = balanced_sample(x_clean, y_clean)
-    return x_balanced, y_balanced
+    # x_balanced, y_balanced = balanced_sample(x_clean, y_clean)
+    return x_clean, y_clean  # x_balanced, y_balanced
 
 
 def create_name(i, output_path, winsize, step):
@@ -311,10 +311,11 @@ def save_infos(
         f.write(f"number of classes: {len(np.unique(y_balanced))}\n")
         f.write(f"number of samples: {len(y_balanced)}\n")
         f.write(f"number of samples per class: {Counter(y_balanced)}\n")
+        f.write(f"classes: {np.unique(y_balanced, return_counts=True)}\n")
         f.write(f"data shape: {x_balanced.shape}\n")
         f.write(f"min value: {np.min(x_balanced)}\n")
         f.write(f"max value: {np.max(x_balanced)}\n")
-        f.write(f"input bands: {['VV', 'VH', 'VV/VH', 'L2(VV,VH)']} \n")
+        f.write(f"input bands: {['VV', 'VH', 'VV/VH']} \n")
         f.write(f"input path: {path}\n")
         f.write(f"ground truth path: {pathgt}\n")
         f.write(f"output path: {save_path}\n")
@@ -323,15 +324,16 @@ def save_infos(
 
 
 if __name__ == "__main__":
-    output_path = "../dataset_E3/"
+    output_path = "../dataset_E3/63W0.01/"
+    makedirs(output_path, exist_ok=True)
     winsize = 5
     step = 0
     bins = 100
     remove_c = ["water"]  # ,"urbanized area"]
 
     # Be careful between .tif and .tiff
-    path = join("../dataset_E2/", "*.tif")
-    pathgt = "../data/ground_truth/ground_truth.tif"
+    path = join("../reunion/PC_R_2/1690734682/", "*.tiff")
+    pathgt = "../reunion/GT.tif"
 
     gt = np.array(Image.open(pathgt))
     wind_gt = np.lib.stride_tricks.sliding_window_view(gt, (winsize, winsize))[

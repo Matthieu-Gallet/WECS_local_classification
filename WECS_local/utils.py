@@ -11,10 +11,11 @@ import pickle
 from sklearn.pipeline import Pipeline
 import numpy as np
 
+
 def scale_image(img):
     img = img.astype(float)
     img = img - img.min()
-    img = img / img.max()-img.min()
+    img = img / img.max() - img.min()
     return img
 
 
@@ -57,7 +58,6 @@ def init_logger(path_log):
     return logging
 
 
-
 def parser_pipeline(opt, ind):
     for imp in opt["import"]:
         exec(imp)
@@ -76,7 +76,7 @@ def parser_pipeline(opt, ind):
                 for g in range(1, len(pipe[i]))
             ]
         step.append((name_methode, estim))
-    return Pipeline(step, verbose=True)#, memory=".cache")
+    return Pipeline(step, verbose=True)  # , memory=".cache")
 
 
 def save_h5(img, label, filename):
@@ -86,7 +86,9 @@ def save_h5(img, label, filename):
         hf.create_dataset(
             "img", np.shape(img), h5py.h5t.IEEE_F32BE, compression="gzip", data=img
         )  # IEEE_F32BE is big endian float32
-        hf.create_dataset("label", np.shape(label), compression="gzip", data=label.astype('S'))
+        hf.create_dataset(
+            "label", np.shape(label), compression="gzip", data=label.astype("S")
+        )
 
 
 def load_h5(filename):
@@ -96,31 +98,3 @@ def load_h5(filename):
         data = np.array(hf["img"][:]).astype(np.float32)
         meta = np.array(hf["label"][:]).astype(str)
     return data, meta
-
-def best_threshold_accuracy_ROC(bckp):
-    tpr = bckp["tpr"]
-    fpr = bckp["fpr"]
-    thresholds = bckp["thresholds"]
-    num_pos_class = bckp["num_pos_class"]
-    num_neg_class = bckp["num_neg_class"]
-    tp = tpr * num_pos_class
-    tn = (1 - fpr) * num_neg_class
-    acc = (tp + tn) / (num_pos_class + num_neg_class)
-
-    best_threshold = thresholds[np.argmax(acc)]
-    return np.amax(acc), best_threshold
-
-
-def best_threshold_FPRc_ROC(bckp, rate=0.1):
-    tpr = bckp["tpr"]
-    fpr = bckp["fpr"]
-    thresholds = bckp["thresholds"]
-    num_pos_class = bckp["num_pos_class"]
-    num_neg_class = bckp["num_neg_class"]
-    tp = tpr * num_pos_class
-    tn = (1 - fpr) * num_neg_class
-    acc = (tp + tn) / (num_pos_class + num_neg_class)
-
-    threshold_fpc = thresholds[fpr>=rate][0]
-    accu_fpc = acc[fpr>=rate][0]
-    return accu_fpc, threshold_fpc
