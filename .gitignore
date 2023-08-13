@@ -1,2 +1,6 @@
 code/*
-code_II/*
+dev.ipynb
+WECS_local/classification/classify_II.py
+WECS_local/classification/classify.py
+*.cpython-*
+WECS_local/results/*

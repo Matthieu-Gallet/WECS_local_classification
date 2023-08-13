@@ -98,3 +98,35 @@ def load_h5(filename):
         data = np.array(hf["img"][:]).astype(np.float32)
         meta = np.array(hf["label"][:]).astype(str)
     return data, meta
+
+
+def random_shuffle(X, y, rng=-1):
+    """Shuffle randomly the dataset
+
+    Parameters
+    ----------
+    X : numpy array
+        dataset of images
+
+    y : numpy array
+        dataset of labels
+
+    rng : int, optional
+        Random seed, by default -1, must be a np.random.default_rng() object
+
+    Returns
+    -------
+    numpy array
+        shuffled dataset of images
+
+    numpy array
+        shuffled dataset of labels
+
+    """
+    if rng == -1:
+        rng = np.random.default_rng(42)
+    idx = np.arange(X.shape[0])
+    rng.shuffle(idx)
+    X = X[idx]
+    y = y[idx]
+    return X, y
