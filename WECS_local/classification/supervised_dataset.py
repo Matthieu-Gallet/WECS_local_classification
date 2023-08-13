@@ -1,5 +1,9 @@
+import sys
+
+sys.path.append("../")
+
 from utils import *
-from geo_tools import *
+from data.process.prepare_data import load_data
 from PIL import Image
 from collections import Counter
 import matplotlib.pyplot as plt

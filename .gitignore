@@ -1,6 +1,6 @@
 code/*
 dev.ipynb
-WECS_local/classification/classify_II.py
-WECS_local/classification/classify.py
-*.cpython-*
+WECS_local/classification/old/*
 WECS_local/results/*
+WECS_local/fig.ipynb
+*.cpython-*

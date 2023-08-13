@@ -5,10 +5,9 @@ sys.path.append("../")
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from utils import load_h5, random_shuffle
-from tensorflow.keras.utils import to_categorical
 
 
-def balance_dataset(X, Y, shuffle=False, oversampling=False):
+def balance_dataset(X, Y, shuffle=False, oversampling=False, seed=42):
     """Balance the dataset by taking the minimum number of samples per class (under-sampling)
 
     Parameters
@@ -33,7 +32,7 @@ def balance_dataset(X, Y, shuffle=False, oversampling=False):
     if oversampling:
         X, Y = oversampling_minority(X, Y)
     if shuffle:
-        X, Y = random_shuffle(X, Y)
+        X, Y = random_shuffle(X, Y, seed=seed)
     cat, counts = np.unique(Y, return_counts=True)
     min_count = np.min(counts)
     X_bal = []
@@ -117,9 +116,6 @@ def prepare_data(
     shuffle : bool, optional
         Shuffle the dataset (seed=42), by default True
 
-    categorical : bool, optional
-        If True, encode the labels using to_categorical, by default False
-
     Returns
     -------
     numpy array
@@ -186,8 +182,6 @@ def prepare_data_split(
     shuffle : bool, optional
         Shuffle the dataset (seed=42), by default True
 
-    categorical : bool, optional
-        If True, encode the labels using to_categorical, by default False
 
     Returns
     -------

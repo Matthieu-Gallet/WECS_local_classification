@@ -125,6 +125,8 @@ def random_shuffle(X, y, rng=-1):
     """
     if rng == -1:
         rng = np.random.default_rng(42)
+    else:
+        rng = np.random.default_rng(rng)
     idx = np.arange(X.shape[0])
     rng.shuffle(idx)
     X = X[idx]
