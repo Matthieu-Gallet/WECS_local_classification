@@ -20,13 +20,13 @@ Test and validation of the new WECS method on Cierro Prieto Reservoir, Mexico
  :warning: Adapt the path to the data in the script.
 
 ### 2.3. L-WECS method
-    The third step is to apply the L-WECS method using `WECS_local\lwecs.py`. This script will apply the L-WECS method on the data. If the alpha parameter is set to -1, the method will be the general WECS method.
-    :warning: Adapt the path to the data in the script.
+The third step is to apply the L-WECS method using `WECS_local\lwecs.py`. This script will apply the L-WECS method on the data. If the alpha parameter is set to -1, the method will be the general WECS method.
+:warning: Adapt the path to the data in the script.
 
 ### 2.4. Supervised dataset
-    The fourth step is the preparation of the  dataset for the classification task. The script `WECS_local\classification\supervised_dataset.py` will create a hdf5 file containing a 5x5 windows of the l-wecs output associated with the ground truth. This ground truth is located in `WECS_local\data\ground_truth`. 
-    :warning: Adapt the path to the data in the script and be careful of the projection of the ground truth (should be the same as the data).
+The fourth step is the preparation of the  dataset for the classification task. The script `WECS_local\classification\supervised_dataset.py` will create a hdf5 file containing a 5x5 windows of the l-wecs output associated with the ground truth. This ground truth is located in `WECS_local\data\ground_truth`. 
+:warning: Adapt the path to the data in the script and be careful of the projection of the ground truth (should be the same as the data).
 
 ### 2.5. Classification
-    The fifth step is the classification task. The script `WECS_local\classification\classify_II.py` will train a KNN classifier on the supervised dataset for the change detection task. This script calculates the f1-score for all the datasets.
-    The last script `WECS_local\classification\multi_classify.py` will train a KNN classifier on the supervised dataset for the classification task. 
+The fifth step is the classification task. The script `WECS_local\classification\classify_II.py` will train a KNN classifier on the supervised dataset for the change detection task. This script calculates the f1-score for all the datasets.
+The last script `WECS_local\classification\multi_classify.py` will train a KNN classifier on the supervised dataset for the classification task. 
