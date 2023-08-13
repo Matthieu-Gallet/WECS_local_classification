@@ -32,7 +32,7 @@ def balance_dataset(X, Y, shuffle=False, oversampling=False, seed=42):
     if oversampling:
         X, Y = oversampling_minority(X, Y)
     if shuffle:
-        X, Y = random_shuffle(X, Y, seed=seed)
+        X, Y = random_shuffle(X, Y, rng=seed)
     cat, counts = np.unique(Y, return_counts=True)
     min_count = np.min(counts)
     X_bal = []
@@ -96,6 +96,7 @@ def prepare_data(
     band_max=[0, 1, 2],
     balanced=True,
     shuffle=True,
+    binary=True,
 ):
     """Prepare the data for the CNN model, it suppose that the data are stored in hdf5 files in the same folder and named "data_train.h5" and "data_test.h5"
 
@@ -145,7 +146,8 @@ def prepare_data(
 
     if shuffle:
         X, Y = random_shuffle(X, Y)
-    Y = np.where(Y != "no change", "change", Y)
+    if binary:
+        Y = np.where(Y != "no change", "change", Y)
 
     if balanced:
         X, Y = balance_dataset(X, Y)

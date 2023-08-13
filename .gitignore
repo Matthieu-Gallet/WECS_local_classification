@@ -3,4 +3,6 @@ dev.ipynb
 WECS_local/classification/old/*
 WECS_local/results/*
 WECS_local/fig.ipynb
+WECS_local/figures/*
 *.cpython-*
+WECS_local/fig.ipynb
